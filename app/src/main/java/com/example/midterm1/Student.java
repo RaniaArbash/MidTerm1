@@ -6,15 +6,23 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.RequiresApi;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
+@Entity
 public class Student implements Parcelable {
+    @PrimaryKey(autoGenerate = true)
+    public int id;
 
     String studentName;
+
+    @Ignore
     Bitmap imageData;
+
+
     int year;
+
     int level;
 
     protected Student(Parcel in) {

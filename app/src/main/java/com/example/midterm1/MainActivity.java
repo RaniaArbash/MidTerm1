@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements AddYearAndLevelDi
     Student myself;
     ArrayList<Student> studentArrayList;
     EditText myName;
+    DatabaseClient dbClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements AddYearAndLevelDi
         myName = (EditText) findViewById(R.id.studentName);
         myself = new Student();
         studentArrayList = new ArrayList<Student>(0);
+        dbClient = DatabaseClient.getInstance(this);
     }
 
     @Override
@@ -62,13 +64,6 @@ public class MainActivity extends AppCompatActivity implements AddYearAndLevelDi
         Toast.makeText(getApplicationContext(),"Year "+myself.year+" level: " + myself.level,Toast.LENGTH_LONG).show();
     }
 
-//    public void goToReport(View view) {
-//        myself.studentName = myName.getText().toString();
-//        Intent reportIntent = new Intent(this,ReportActivity.class);
-//        reportIntent.putExtra("student",myself);
-//
-//        startActivity(reportIntent);
-//    }
 
     public void addNewCourse(View view) {
         AddYearAndLevelDialog newDialog = new AddYearAndLevelDialog();
@@ -90,7 +85,6 @@ public class MainActivity extends AppCompatActivity implements AddYearAndLevelDi
         switch (item.getItemId()) {
             case R.id.report:
                 Intent reportIntent = new Intent(this,ReportActivity.class);
-                reportIntent.putParcelableArrayListExtra("students",studentArrayList);
                 startActivity(reportIntent);
                 break;
         }
@@ -100,10 +94,13 @@ public class MainActivity extends AppCompatActivity implements AddYearAndLevelDi
 
     public void saveStudent(View view) {
         myself.studentName = myName.getText().toString();
-        studentArrayList.add(myself);
+        DatabaseClient.insertToDB(this,myself);
+
+
+        //studentArrayList.add(myself);
         //Toast.makeText(getApplicationContext()," Student " + myself.studentName + " is saved correcttly ",Toast.LENGTH_LONG).show();
         Intent reportIntent = new Intent(this,ReportActivity.class);
-        reportIntent.putParcelableArrayListExtra("students",studentArrayList);
+      //  reportIntent.putParcelableArrayListExtra("students",studentArrayList);
         startActivity(reportIntent);
         myself = new Student();
 

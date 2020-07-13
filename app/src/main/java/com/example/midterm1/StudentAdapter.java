@@ -13,11 +13,11 @@ import java.util.ArrayList;
 public class StudentAdapter extends BaseAdapter {
 
     Context context;
-    ArrayList<Student> StudentList;
+    Student[] StudentList;
     LayoutInflater inflater;
     View view;
 
-    public StudentAdapter(Context appContext, ArrayList<Student> list){
+    public StudentAdapter(Context appContext, Student[]  list){
         this.context = appContext;
         this.StudentList = list;
         inflater = LayoutInflater.from(appContext);
@@ -25,12 +25,12 @@ public class StudentAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return StudentList.size();
+        return StudentList.length;
     }
 
     @Override
     public Object getItem(int position) {
-        return StudentList.get(position);
+        return StudentList[position];
     }
 
     @Override
@@ -45,9 +45,9 @@ public class StudentAdapter extends BaseAdapter {
         TextView yearandlevelText = (TextView) view.findViewById(R.id.year_level);
         ImageView studentImage = (ImageView)view.findViewById(R.id.image) ;
 
-        studetName.setText((StudentList.get(position)).studentName);
-        yearandlevelText.setText("Level: " + StudentList.get(position).level +" Year: " +StudentList.get(position).year);
-        studentImage.setImageBitmap(StudentList.get(position).imageData);
+        studetName.setText((StudentList[position].studentName));
+        yearandlevelText.setText("Level: " + StudentList[position].level +" Year: " +StudentList[position].year);
+        studentImage.setImageBitmap(StudentList[position].imageData);
         return view;
     }
 }

@@ -16,17 +16,16 @@ ListView simpleList;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
-       ArrayList<Student> list =  getIntent().getParcelableArrayListExtra("students");
-        simpleList = (ListView) findViewById(R.id.simpleList);
-        StudentAdapter adapter= new StudentAdapter(getApplicationContext(),list);
-        simpleList.setAdapter(adapter);
-     //  s.allCourses = getIntent().getParcelableArrayListExtra("courseList");
+      // ArrayList<Student> list =  getIntent().getParcelableArrayListExtra("students");
 
-     //   Log.d("course",((Course)s.allCourses.get(0)).courseName);
-     //   CourseList newList = CourseList.newInstance(s.allCourses);
-       // getSupportFragmentManager().beginTransaction()
-         //       .replace(R.id.frameLayout, newList).commit();
+         DatabaseClient.databaseWriteExecutor.execute(()->{
+            Student[] list =  DatabaseClient.getDatabase().StudentDoa().loadAllStudents();
+             simpleList = (ListView) findViewById(R.id.simpleList);
 
+             StudentAdapter adapter= new StudentAdapter(this,list);
+             simpleList.setAdapter(adapter);
+
+        });
 
 
 
